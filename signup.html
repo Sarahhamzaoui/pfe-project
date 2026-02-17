@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sign Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #066791, #057499, #04709f, #004e92);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+        /* Floating Particles */
+        .particles span {
+            position: absolute;
+            bottom: -50px;
+            width: 10px;
+            height: 10px;
+            background: rgb(255, 255, 255);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
+
+        .particles span:nth-child(1) { left: 10%; animation-duration: 8s; }
+        .particles span:nth-child(2) { left: 25%; animation-duration: 12s; }
+        .particles span:nth-child(3) { left: 40%; animation-duration: 10s; }
+        .particles span:nth-child(4) { left: 60%; animation-duration: 14s; }
+        .particles span:nth-child(5) { left: 75%; animation-duration: 9s; }
+        .particles span:nth-child(6) { left: 90%; animation-duration: 11s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; }
+            100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+        }
+
+/* Signup Container */
+.signup-container {
+    position: relative;
+    background: rgb(255, 255, 255);
+    padding: 85px 45px 45px 45px;   /* smaller padding */
+    width: 60%;                    /* was 65% */
+    max-width: 700px;              /* was 750px */
+    min-height: 55vh;              /* was 60vh */
+    border-radius: 25px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Header */
+.form-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #222;
+}
+
+.form-header p {
+    color: #666;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+/* Form width */
+.form-content {
+    max-width: 470px;
+    margin: 0 auto;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 14px;
+}
+
+.input-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #444;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 8px 11px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #004e92;
+    box-shadow: 0 0 0 3px rgba(0, 78, 146, 0.15);
+    outline: none;
+}
+
+/* Name fields */
+.name-group {
+    display: flex;
+    gap: 8px;
+}
+
+.name-group .name-field {
+    flex: 1;
+}
+
+/* Button */
+.signup-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #004e92, #0078ff);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 78, 146, 0.3);
+}
+
+/* Login link */
+.login-link {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.login-link a {
+    color: #004e92;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer-text {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 11px;
+    color: #888;
+}
+
+</style>
+</head>
+
+<body>
+        <div class="particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+<div class="signup-container">
+    
+    <div class="form-header">
+            <img src="logo.png" alt="logo" width="150">
+        <h1>Create Account</h1>
+        <p>Sign up to get started</p>
+    </div>
+
+    <div class="form-content">
+
+        <div class="input-group name-group">
+            <div class="name-field">
+                <label>First Name</label>
+                <input type="text" placeholder="Enter your first name">
+            </div>
+            <div class="name-field">
+                <label>Last Name</label>
+                <input type="text" placeholder="Enter your last name">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="Enter your email">
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="Create a password">
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Password</label>
+            <input type="password" placeholder="Confirm your password">
+        </div>
+
+        <div class="input-group">
+            <label>Role</label>
+            <select>
+                <option value="admin">Admin</option>
+                <option value="dml">DML User</option>
+                <option value="manager">Manager</option>
+                <option value="employee">Employee</option>
+            </select>
+        </div>
+
+        <button class="signup-btn">Sign Up</button>
+
+        <div class="login-link">
+            Already have an account? <a href="login.html">Login</a>
+        </div>
+
+        <div class="footer-text">
+            © 2026 Mission Management Platform
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
