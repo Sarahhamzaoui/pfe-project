@@ -1,17 +1,14 @@
-const express = require("express");
-const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Backend is working 🚀");
-});
-app.get("/users", (req, res) => {
-  res.json([
-    { id: 1, name: "Lea" },
-    { id: 2, name: "Sara" }
-  ]);
-});
-
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+fetch("http://localhost/your-folder/login.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        email: emailInput.value,
+        password: passwordInput.value
+    })
+})
+.then(res => res.json())
+.then(data => {
+    alert(data.message);
 });
