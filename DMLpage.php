@@ -16,6 +16,28 @@ $firstName = $_SESSION["first_name"] ?? "User";
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+
+/* Search bar FIXED */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 200px;
+    transition: 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #00407f;
+    box-shadow: 0 0 5px rgba(0, 64, 127, 0.3);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -23,20 +45,29 @@ $firstName = $_SESSION["first_name"] ?? "User";
     font-family: 'Poppins', sans-serif;
 }
 
-/* Background */
 body {
     background-color: #ffffff;
     color: #000000;
 }
+
+/* Sidebar */
 /* Sidebar */
 .sidebar {
     width: 250px;
     height: 100vh;
-    background: linear-gradient(to right, #adaffc, #6fa9e3);
-    color: black;
+    background: linear-gradient(to right, #1d1f69, #00407f);
     padding: 20px;
     position: fixed;
     top: 0;
+    left: -250px; /* hidden */
+    color: white;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+/* When sidebar is open */
+.sidebar.active {
+    background: linear-gradient(to right, #1d1f69, #00407f);    
     left: 0;
 }
 
@@ -55,8 +86,7 @@ body {
 
 .sidebar ul li a {
     text-decoration: none;
-    color:black
-    #000000;
+    color:white;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -67,13 +97,11 @@ body {
 
 .sidebar ul li a:hover,
 .sidebar ul li a.active {
-    background: #2563eb;
-    color: Black;
+    background:linear-gradient(to right, #000435, #001f3f);
 }
 
 /* Main Content */
 .main-content {
-    margin-left: 250px;
     padding: 40px;
 }
 
@@ -83,7 +111,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    color: balck;
+    gap: 20px;
 }
 
 .user-info {
@@ -91,18 +119,16 @@ body {
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 14px;
-    color: #333;
 }
 
 /* Table Container */
 .container {
-    background: linear-gradient(to right, #adaffc, #6fa9e3);
+    background:linear-gradient(#1d1f69,#00407f);
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-/* Table */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -120,10 +146,11 @@ th, td {
 
 tbody tr {
     border-bottom: 1px solid #eee;
+    color:white;
 }
 
 tbody tr:hover {
-    background: linear-gradient(to right, #828bed, #80bffe);
+    background: linear-gradient(to right, #10175f, #1f6ebc);
 }
 
 /* Status badge */
@@ -146,6 +173,28 @@ tbody tr:hover {
 .edit { color: #2563eb; }
 .delete { color: #ef4444; }
 
+/* Notification */
+.Notification {
+    margin-top: 20px;
+}
+
+.Notification-btn{
+    background: linear-gradient(to right, #1d1f69, #00407f);
+    color:white;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.Notification-btn:hover{
+    background: linear-gradient(to right, #000435, #001f3f);
+    box-shadow: 0 0 5px rgba(0, 78, 146, 0.4);
+}
+
 </style>
 </head>
 
@@ -155,12 +204,12 @@ tbody tr:hover {
 <div class="sidebar">
     <h2>DML Panel</h2>
     <ul>
-        <li><a href="#">🏠 Dashboard</a></li>
-        <li><a href="#" class="active">📄 Missions</a></li>
-        <li><a href="#">👥 Users</a></li>
-        <li><a href="#">📊 Reports</a></li>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="DMLpage.php">Missions</a></li>
+        <li><a href="BookingPage.php"> Booking </a></li>
+        <li><a href="Profile.php">Profile</a></li>
         <li><a href="#">⚙ Settings</a></li>
-        <li><a href="logout.php">🚪 Logout</a></li>
+        <li><a href="logout.php"> Logout</a></li>
     </ul>
 </div>
 
@@ -168,8 +217,15 @@ tbody tr:hover {
 <div class="main-content">
 
     <div class="topbar">
+        <button id="menuBtn" style="font-size:22px;border:none;background:none;cursor:pointer;">
+☰
+</button>
         <img src="logo.png" alt="Profile" width="150">
-        <h1>Mission List</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Search missions...">
+            <input type="date" id="dateFilter">
+        </div>
+
         <div class="user-info">
             Welcome, <?php echo htmlspecialchars($firstName); ?>
         </div>
@@ -180,6 +236,7 @@ tbody tr:hover {
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Full name</th>
                     <th>Title</th>
                     <th>Destination</th>
                     <th>Start Date</th>
@@ -190,7 +247,8 @@ tbody tr:hover {
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
+                    <td>3</td>
+                    <td>Hamzaoui sarah</td>
                     <td>Business Trip</td>
                     <td>Paris</td>
                     <td>2026-02-20</td>
@@ -201,11 +259,78 @@ tbody tr:hover {
                         <span class="action delete">🗑</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Zeraouti lyna</td>
+                    <td>Business trip</td>
+                    <td>Spain</td>
+                    <td>2026-01-05</td>
+                    <td><span class="badge pending">Pending</span></td>
+                    <td>2026-01-15</td>
+                    <td>
+                        <span class="action edit">✏</span>
+                        <span class="action delete">🗑</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Roumane lydia</td>
+                    <td>Business Trip</td>
+                    <td>Italy</td>
+                    <td>2025-12-04</td>
+                    <td><span class="badge rejected">Rejected</span></td>
+                    <td>2025-12-13</td>
+                    <td>
+                        <span class="action edit">✏</span>
+                        <span class="action delete">🗑</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- Notification Back -->
+    <div class="Notification">
+        <p>Send notification here:</p>
+        <button class="Notification-btn">Notification</button>
+    </div>
+
 </div>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const dateFilter = document.getElementById("dateFilter");
+
+function filterTable() {
+    let searchValue = searchInput.value.toLowerCase();
+    let selectedDate = dateFilter.value;
+    let rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+        let rowText = row.textContent.toLowerCase();
+        let startDate = row.cells[4].textContent.trim();
+
+        let matchesSearch = rowText.includes(searchValue);
+        let matchesDate = selectedDate === "" || startDate === selectedDate;
+
+        row.style.display = (matchesSearch && matchesDate) ? "" : "none";
+});
+}
+
+searchInput.addEventListener("keyup", filterTable);
+dateFilter.addEventListener("change", filterTable);
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.querySelector(".sidebar");
+
+menuBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+    document.addEventListener("click", function(e){
+    if(!sidebar.contains(e.target) && !menuBtn.contains(e.target)){
+        sidebar.classList.remove("active");
+    }
+});
+});
+</script>
 
 </body>
 </html>

@@ -28,7 +28,7 @@ $email = trim($data['email']);
 $password = trim($data['password']);
 
 // Prepare statement
-$stmt = $conn->prepare("SELECT userID, first_name, role, password FROM users WHERE email = ?");
+$stmt = $conn->prepare("SELECT userID, first_name, role, password, phone FROM users WHERE email = ?");
 if (!$stmt) {
     echo json_encode(["message" => "Query preparation failed"]);
     exit;
@@ -53,8 +53,10 @@ if (!password_verify($password, $user['password'])) {
 
 // Store session
 $_SESSION["userID"] = $user["userID"];
+$_SESSION["Email"] = $email;
 $_SESSION["first_name"] = $user["first_name"];
 $_SESSION["role"] = $user["role"];
+$_SESSION["phone"] = $user["phone"];
 
 // Success response
 echo json_encode([
